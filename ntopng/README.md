@@ -25,7 +25,7 @@ services:
     image: vimagick/ntopng
     command: --community -d /var/lib/ntopng -i eth0 -r 127.0.0.1:6379@0 -w 0.0.0.0:3000
     volumes:
-      - ./data/ntop:/var/lib/ntopng
+      - /var/local/docker/ntopng/ntopng:/var/lib/ntopng
     network_mode: host
     restart: unless-stopped
 
@@ -35,7 +35,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./data/redis:/data
+      - /var/local/docker/ntopng/redis:/data
     restart: unless-stopped
 ```
 
@@ -50,7 +50,7 @@ $ curl http://127.0.0.1:3000
 ## Collector mode
 
 ```
-$ mkdir -m 777 -p data/{ntopng,redis}
+$ mkdir -m 777 -p /var/local/docker/ntopng/{ntopng,redis}
 $ docker-compose up -d -f docker-compose-collector.yml
 $ curl http://127.0.0.1:3000
 ```
